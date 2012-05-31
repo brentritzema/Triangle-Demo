@@ -1,4 +1,46 @@
 Triangle-Demo
 =============
 
-This project #1 of the #Journoob project.
+This project #1 of the "Journoob Project". The Journoob Project is an endevour, created by myself, to become a guru in the fields of computer, graphics, and game programming. To accomplish these goals I would like to follow these principles: 
+-KISS(http://en.wikipedia.org/wiki/KISS_principle)
+-YAGNI(http://en.wikipedia.org/wiki/You_ain%27t_gonna_need_it)
+-DRY(http://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
+
+This Triangle Demo is written in C++ and uses OpenGL for 3D Graphics.
+
+Team
+--------
+
+Brent Ritzema - Project Leader - (ritztro@gmail.com)
+Emil Sandstø - Mentor - (emilalexer@gmail.com)
+
+Liscense
+---------
+
+The projects of the "Journoob Project" are made available under the MIT License.
+
+Copyright (c) 2011 Ritztro
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+
+Contributions
+--------------
+
+I have yet to ask for contributions on this project as this is a self endevour. If you would like to attempt a simliar endevour then please contact me so that we could possibly collaborate in some way.
