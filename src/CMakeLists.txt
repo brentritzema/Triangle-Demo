@@ -20,15 +20,26 @@ SOURCE_GROUP("Common" FILES ${COMMON_SOURCE})
 SOURCE_GROUP("Unique" FILES ${UNIQUE_SOURCE})
 
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin/)
+if(WIN32)
+    SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
+    SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_BINARY_DIR})
+    SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_BINARY_DIR})
+endif(WIN32)
 
 add_executable(Triangle-Demo-1 ${COMMON_SOURCE} ${UNIQUE_SOURCE})
 
 if(WIN32)
-    target_link_libraries(Triangle-Demo-1 GL GLU GLEW glfw)
+    target_link_libraries(Triangle-Demo-1 ${LIBS})
 endif(WIN32)
 
 if(NOT WIN32)
-    target_link_libraries(Triangle-Demo-1 GL GLU GLEW glfw Xrandr rt)
+    target_link_libraries(Triangle-Demo-1 ${LIBS} Xrandr rt)
 endif(NOT WIN32)
 
-file(COPY ${CMAKE_SOURCE_DIR}/res/ DESTINATION ${CMAKE_BINARY_DIR}/res/)
+if(WIN32)
+    file(COPY ${CMAKE_SOURCE_DIR}/res/ DESTINATION ${CMAKE_BINARY_DIR}/res/)
+else()
+    file(COPY ${CMAKE_SOURCE_DIR}/res/ DESTINATION ${CMAKE_BINARY_DIR}/bin/res/)
+endif(WIN32)
+
+

@@ -39,8 +39,6 @@
    #define VERSION_MAJOR @triangle_VERSION_MAJOR@
    #define VERSION_MINOR @triangle_VERSION_MINOR@
 
-   #define RESOURCE_DIR @RESOURCE_DIR@
-
    //Platforms
    #ifdef WIN32
    #define PLATFORM PLATFORM_WIN
