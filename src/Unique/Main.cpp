@@ -1,66 +1,106 @@
-#include <GL/glew.h>
-#include <Common/OpenGL.hpp>
+// Include standard headers
+#include <stdio.h>
 #include <stdlib.h>
+
+// GLEW to handle extensions
+#include <GL/glew.h>
+
+// OpenGL for Graphics
+#include <Common/OpenGL.hpp>
+
+// GLFW for windowing and input
 #include <GL/glfw.h>
-#include <iostream>
 
-using namespace std;
+// Include GLM for math
+#include <glm/glm.hpp>
 
-bool Init();
-void Shut_Down(int return_code);
-void Main_Loop(void);
+#include <Common/Shader.hpp>
+
+// An array of 3 vectors which represents 3 vertices
+static const GLfloat g_vertex_buffer_data[] =
+{
+    -1.0f, -1.0f, 0.0f,
+    1.0f, -1.0f, 0.0f,
+    0.0f,  1.0f, 0.0f,
+};
+
 
 int main()
 {
-    if(Init())
+    if( !glfwInit() )
     {
-        Main_Loop();
-    }
-    glfwTerminate();
-    return 0;
-}
-
-bool Init()
-{
-    const int window_width = 800,
-              window_height = 600;
-
-    if (glfwInit() != GL_TRUE)
-    {
-        cout << "Failed to load glfw" << endl;
-        return false;
+        fprintf( stderr, "Failed to initialize GLFW\n" );
+        return -1;
     }
 
-    else
+    glfwOpenWindowHint(GLFW_FSAA_SAMPLES, 4); // 4x antialiasing
+    glfwOpenWindowHint(GLFW_OPENGL_VERSION_MAJOR, 3); // I want OpenGL 3.1
+    glfwOpenWindowHint(GLFW_OPENGL_VERSION_MINOR, 1);
+
+    // Open a window and create its OpenGL context
+    if(glfwOpenWindow( 1024, 768, 0,0,0,0, 8,0, GLFW_WINDOW) != GL_TRUE )
     {
-        // 800 x 600, 16 bit color, no depth, alpha or stencil buffers, windowed
-        if (glfwOpenWindow(window_width, window_height, 5, 6, 5, 0, 0, 0, GLFW_WINDOW) != GL_TRUE)
-        {
-            cout << "Failed to open window" << endl;
-            return false;
-        }
-        glfwSetWindowTitle("Triangle-Demo-1");
+        fprintf( stderr, "Failed to open GLFW window\n" );
+        glfwTerminate();
+        return -1;
     }
 
-    return true;
-}
-
-
-void Main_Loop(void)
-{
-    while(1)
+    // Initialize GLEW
+    if (glewInit() != GLEW_OK)
     {
-        if (glfwGetKey(GLFW_KEY_ESC) == GLFW_PRESS)
-        {
-            break;
-        }
+        fprintf(stderr, "Failed to initialize GLEW\n");
+        return -1;
+    }
 
-        // clear the buffer
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        // draw the figure
-        //Draw();
-        // swap back and front buffers
+    glfwSetWindowTitle( "Triangle-Demo-1" );
+
+
+    // This will identify our vertex buffer
+    GLuint vertexbuffer;
+    // Generate 1 buffer, put the resulting identifier in vertexbuffer
+    glGenBuffers(1, &vertexbuffer);
+    // The following commands will talk about our 'vertexbuffer' buffer
+    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+    // Give our vertices to OpenGL.
+    glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+
+    GLuint programID = LoadShaders( "../res/Simple.vert", "../res/Simple.frag" );
+
+    // Dark blue background
+    glClearColor(0.0f, 0.0f, 0.3f, 0.0f);
+
+
+    // Ensure we can capture the escape key being pressed below
+    glfwEnable( GLFW_STICKY_KEYS );
+
+    // Create and compile our GLSL program from the shaders
+
+    glUseProgram(programID);
+
+    do
+    {
+        // 1rst attribute buffer : vertices
+        glEnableVertexAttribArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+        glVertexAttribPointer(
+            0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+            3,                  // size
+            GL_FLOAT,           // type
+            GL_FALSE,           // normalized?
+            0,                  // stride
+            (void*)0            // array buffer offset
+        );
+
+        // Draw the triangle !
+        glDrawArrays(GL_TRIANGLES, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 triangle
+
+        glDisableVertexAttribArray(0);
+        // Swap buffers
         glfwSwapBuffers();
-    }
+
+    } // Check if the ESC key was pressed or the window was closed
+    while( glfwGetKey( GLFW_KEY_ESC ) != GLFW_PRESS &&
+            glfwGetWindowParam( GLFW_OPENED ) );
+
 }
 
