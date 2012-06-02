@@ -1,6 +1,6 @@
 #version 330 core
 
-in vec4 ex_Color;
+smooth in vec4 ex_Color;
 out vec4 out_Color;
 
 void main(void)
